@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Mini_Warehous_Manager_System.ViewModels.ProductListViewModel>
+
+@{
+    ViewData["Title"] = "Lagerbestand Übersicht";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📦 Mini WMS Dashboard</h2>
+        <a asp-action="Create" class="btn btn-primary">+ Neues Produkt anlegen</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>SKU / Artikelnummer</th>
+                        <th>Name</th>
+                        <th class="text-end">Aktueller Lagerbestand</th>
+                        <th class="text-center">Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">Noch keine Produkte im Lager vorhanden.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var product in Model)
+                        {
+                            <tr>
+                                <td><strong>@product.SKU</strong></td>
+                                <td>@product.Name</td>
+                                <td class="text-end">
+                                    <span class="badge @(product.CurrentStock > 0 ? "bg-success" : "bg-danger") fs-6">
+                                        @product.CurrentStock Stk.
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <a asp-action="ManageStock" asp-route-id="@product.Id" class="btn btn-warning btn-sm">Bestand buchen</a>
+                                    <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-info btn-sm">Historie</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

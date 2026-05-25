@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path="ci.yml" />
+  </Folder>
+  <Folder Name="/Projektmappenelemente/">
+    <File Path="docker-compose.yml" />
+  </Folder>
+  <Project Path="Mini-Warehous-Manager-System.Tests/Mini-Warehous-Manager-System.Tests.csproj" />
+  <Project Path="Mini-Warehous-Manager-System/Mini-Warehous-Manager-System.csproj" />
+</Solution>

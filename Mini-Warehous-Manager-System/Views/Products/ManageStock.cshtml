@@ -1,0 +1,50 @@
+﻿@model Mini_Warehous_Manager_System.ViewModels.CreateMovementViewModel
+
+@{
+    ViewData["Title"] = "Bestand buchen";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <h2>📊 Bestandsbewegung buchen</h2>
+    <p class="text-muted">Hier kannst du Wareneingänge oder Warenausgänge erfassen.</p>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5>Stammdaten:</h5>
+            <p class="mb-1"><strong>Name:</strong> @Model.Name</p>
+            <p class="mb-1"><strong>SKU:</strong> @Model.SKU</p>
+            <p class="mb-0"><strong>Aktueller Bestand:</strong> <span class="badge bg-secondary fs-6">@Model.CurrentStock Stk.</span></p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="ManageStock" method="post">
+                <input type="hidden" asp-for="ProductId" />
+                <input type="hidden" asp-for="SKU" />
+                <input type="hidden" asp-for="Name" />
+                <input type="hidden" asp-for="CurrentStock" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label class="form-label">Buchungsmenge</label>
+                    <input asp-for="Quantity" class="form-control" type="number" placeholder="z.B. 10 für Zugang, -5 für Abgang" required />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                    <small class="text-muted d-block mt-1">Nutze negative Zahlen für Ausbuchtungen (Warenausgänge).</small>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Grund / Referenz</label>
+                    <input asp-for="Reason" class="form-control" placeholder="z.B. Lieferung von Lieferant A oder Bestellung #1029" />
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">Abbrechen</a>
+                    <button type="submit" class="btn btn-warning">Buchung ausführen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

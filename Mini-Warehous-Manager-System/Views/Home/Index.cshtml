@@ -1,0 +1,128 @@
+﻿@model Mini_Warehous_Manager_System.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "WMS Dashboard";
+}
+
+<div class="container mt-4">
+    <!-- Header-Bereich -->
+    <div class="jumbotron bg-light p-5 rounded-3 mb-4 shadow-sm border">
+        <h1 class="display-4">📦 Mini-WMS</h1>
+        <p class="lead">Willkommen im Warehouse Management System MVP. Verwalte deine Bestände, registriere neue Artikel und verfolge Warenbewegungen in Echtzeit.</p>
+        <hr class="my-4">
+        <div class="d-flex gap-2">
+            <a asp-controller="Products" asp-action="Index" class="btn btn-primary btn-lg">Zum Lagerbestand</a>
+            <a asp-controller="Products" asp-action="Create" class="btn btn-outline-secondary btn-lg">Neues Produkt anlegen</a>
+        </div>
+    </div>
+
+    <!-- Infoboxen / KPIs -->
+    <div class="row mb-4">
+        <!-- Box 1: Produkte Gesamt -->
+        <div class="col-md-4 mb-3">
+            <div class="card bg-primary text-white h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="card-title text-uppercase opacity-75">Produkte im Sortiment</h6>
+                        <h2 class="display-5 fw-bold">@Model.TotalProductsCount</h2>
+                    </div>
+                    <p class="card-text mt-3 mb-0 small">Registrierte Artikeltypen im System</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Box 2: Gesamte gelagerte Artikel -->
+        <div class="col-md-4 mb-3">
+            <div class="card bg-success text-white h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="card-title text-uppercase opacity-75">Gesamtbestand im Lager</h6>
+                        <h2 class="display-5 fw-bold">@Model.TotalItemsInWarehouse</h2>
+                    </div>
+                    <p class="card-text mt-3 mb-0 small">Summe aller physischen Einheiten auf Lager</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Box 3: Ausverkaufte Artikel -->
+        <div class="col-md-4 mb-3">
+            <div class="card @(Model.OutOfStockCount > 0 ? "bg-danger" : "bg-secondary") text-white h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <h6 class="card-title text-uppercase opacity-75">Ausverkaufte Produkte</h6>
+                        <h2 class="display-5 fw-bold">@Model.OutOfStockCount</h2>
+                    </div>
+                    <p class="card-text mt-3 mb-0 small">Artikel mit einem Bestand von 0 Stück</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Kürzlich hinzugefügte Produkte -->
+        <div class="col-md-8 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">🆕 Kürzlich registrierte Produkte</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>Produktname</th>
+                                    <th class="text-end">Bestand</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!Model.RecentProducts.Any())
+                                {
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted py-3">Noch keine Produkte angelegt.</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var product in Model.RecentProducts)
+                                    {
+                                        <tr>
+                                            <td><strong>@product.SKU</strong></td>
+                                            <td>@product.Name</td>
+                                            <td class="text-end">
+                                                <span class="badge @(product.CurrentStock > 0 ? "bg-success" : "bg-danger")">
+                                                    @product.CurrentStock Stk.
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Info -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100 border-info">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">💡 Über dieses Projekt</h5>
+                </div>
+                <div class="card-body">
+                    <p>Dieses Mini-WMS wurde als Portfolio-Projekt entwickelt, um Best-Practices im .NET-Umfeld zu demonstrieren.</p>
+                    <h6>Genutzte Konzepte:</h6>
+                    <ul>
+                        <li>ASP.NET Core 8.0 MVC</li>
+                        <li>Entity Framework Core</li>
+                        <li>Rich Domain Model Pattern</li>
+                        <li>Dependency Injection</li>
+                        <li>Docker & Compose</li>
+                    </ul>
+                    <p class="mb-0 text-muted small">Perfekt zugeschnitten auf die technischen Anforderungen moderner Supply-Chain-Lösungen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
