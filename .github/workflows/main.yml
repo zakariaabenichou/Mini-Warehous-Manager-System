@@ -19,7 +19,10 @@ jobs:
         dotnet-version: 10.0.x
         
     - name: Restore dependencies
-      run: dotnet restore ./Mini-Warehous-Manager-System/Mini-Warehous-Manager-System.csproj
+      run: dotnet restore Mini-Warehous-Manager-System.slnx
       
     - name: Build Project
-      run: dotnet build ./Mini-Warehous-Manager-System/Mini-Warehous-Manager-System.csproj --no-restore --configuration Release
+      run: dotnet build Mini-Warehous-Manager-System.slnx --no-restore --configuration Release
+
+    - name: Run Unit Tests
+      run: dotnet test Mini-Warehous-Manager-System.slnx --no-build --configuration Release --verbosity normal
