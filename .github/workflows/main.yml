@@ -19,7 +19,7 @@ jobs:
         dotnet-version: 10.0.x
         
     - name: Restore dependencies
-      run: dotnet restore ./Mini-Warehous-Manager-System/Mini-warehous-manager-system.csproj
+      run: dotnet restore ./Mini-Warehous-Manager-System/Mini-Warehous-Manager-System.csproj
       
     - name: Build Project
-      run: dotnet build ./Mini-Warehous-Manager-System/Mini-warehous-manager-system.csproj --no-restore --configuration Release
+      run: dotnet build ./Mini-Warehous-Manager-System/Mini-Warehous-Manager-System.csproj --no-restore --configuration Release
